@@ -36,7 +36,8 @@ def welcome():
     return (
         f"Welcome to the Hawaii Climate Analysis API!<br/>"
         f"Avalable Routes:<br/>"
-        f"/api/v1.0/precipitation\n"
+        f"/api/v1.0/precipitation <br/>"
+        f"/api/v1.0/stations<br/>"
     )
 
 
@@ -47,12 +48,12 @@ def precipitation():
     prev_year = dt.date.today() - dt.timedelta(days=365)
 
     # Query for the date and precipitation for the last year
-    precipitation = session.query(Measurement.date, Measurement.prcp).\
+    prc = session.query(Measurement.date, Measurement.prcp).\
         filter(Measurement.date >= prev_year).all()
 
     # Dict with date as the key and prcp as the value
-    precip = {date: prcp for date, prcp in precipitation}
-    return jsonify(precip)
+    pre = {date: prcp for date, prcp in prc}
+    return jsonify(pre)
 
 
 @app.route("/api/v1.0/stations")
